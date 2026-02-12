@@ -1,0 +1,156 @@
+<?php
+use app\models\userModel;
+class AuthController {
+
+  public static function showRegister() {
+    Flight::render('auth/register', [
+      'values' => ['nom'=>'','prenom'=>'','email'=>'','telephone'=>''],
+      'errors' => ['nom'=>'','prenom'=>'','email'=>'','password'=>'','confirm_password'=>'','telephone'=>''],
+      'success' => false
+    ]);
+  }
+
+  public static function showLogin() {
+    Flight::render('auth/login', [
+      'values' => ['prenom'=>''],
+      'errors' => ['prenom'=>'','password'=>''],
+      'success' => false
+    ]);
+  }
+
+  public static function validateRegisterAjax() {
+    header('Content-Type: application/json; charset=utf-8');
+
+    try {
+      $pdo  = Flight::db();
+      $repo = new UserRepository($pdo);
+
+      $req = Flight::request();
+
+      $input = [
+        'nom' => $req->data->nom,
+        'prenom' => $req->data->prenom,
+        'email' => $req->data->email,
+        'password' => $req->data->password,
+        'confirm_password' => $req->data->confirm_password,
+        'telephone' => $req->data->telephone,
+      ];
+
+      $res = Validator::validateRegister($input, $repo);
+
+      Flight::json([
+        'ok' => $res['ok'],
+        'errors' => $res['errors'],
+        'values' => $res['values'],
+      ]);
+    } catch (Throwable $e) {
+      http_response_code(500);
+      Flight::json([
+        'ok' => false,
+        'errors' => ['_global' => 'Erreur serveur lors de la validation.'],
+        'values' => []
+      ]);
+    }
+  }
+
+  public static function postRegister() {
+    $pdo  = Flight::db();
+    $repo = new UserRepository($pdo);
+    $svc  = new UserService($repo);
+
+    $req = Flight::request();
+
+    $input = [
+      'nom' => $req->data->nom,
+      'prenom' => $req->data->prenom,
+      'email' => $req->data->email,
+      'password' => $req->data->password,
+      'confirm_password' => $req->data->confirm_password,
+      'telephone' => $req->data->telephone,
+    ];
+
+    $res = Validator::validateRegister($input, $repo);
+
+    if ($res['ok']) {
+      $svc->register($res['values'], (string)$input['password']);
+      Flight::render('auth/register', [
+        'values' => ['nom'=>'','prenom'=>'','email'=>'','telephone'=>''],
+        'errors' => ['nom'=>'','prenom'=>'','email'=>'','password'=>'','confirm_password'=>'','telephone'=>''],
+        'success' => true
+      ]);
+      return;
+    }
+
+    Flight::render('auth/register', [
+      'values' => $res['values'],
+      'errors' => $res['errors'],
+      'success' => false
+    ]);
+  }
+
+  public static function getAllUser() {
+    $pdo  = Flight::db();
+    $modelUser = new userModel($pdo);
+
+    $users = $modelUser->getUsers();
+    Flight::set('all_users', $users);
+        
+    return true;
+  }
+
+  public static function postLogin() {
+    $users = Flight::get('all_users');
+
+    $pdo  = Flight::db();
+    $repo = new UserRepository($pdo);
+    $svc  = new UserService($repo);
+
+    $req = Flight::request();
+
+    $input = [
+      'email' => $req->data->email,
+    ];
+
+    $res = Validator::validateLogin($input, $repo);
+
+    if ($res['ok']) {
+      session_start();
+      $_SESSION['user'] = $res['user'];
+      Flight::render('dist/index', ['users' => $users]);
+      return;
+      //var_dump($res['user']);
+    }
+
+    Flight::render('auth/login', [
+      'values' => $res['values'],
+      'errors' => $res['errors'],
+      'success' => false
+    ]);
+  }
+
+  public static function postMessage() {
+    $pdo  = Flight::db();
+    $message = new messageModel($pdo);
+
+    $req = Flight::request();
+    session_start();
+    $user = $_SESSION['user'];
+    $idUser = $user['id'];
+    $messages =  $req->data->message;
+
+    $message->insertMessages($idUser,$messages);
+
+    Flight::render('dist/index');
+
+  }
+
+  public static function exitLogin(){
+    $_SESSION['user'] = '';
+    Flight::render('auth/register', [
+      'values' => ['nom'=>'','prenom'=>'','email'=>'','telephone'=>''],
+      'errors' => ['nom'=>'','prenom'=>'','email'=>'','password'=>'','confirm_password'=>'','telephone'=>''],
+      'success' => false
+    ]);
+  }
+  
+}

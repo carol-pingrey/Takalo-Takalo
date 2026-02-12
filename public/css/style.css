@@ -1,0 +1,189 @@
+/* --- Reset & Base Unifiée --- */
+body {
+    /* Fond radial sombre avec une touche de bleu profond */
+    background: #050505 radial-gradient(circle at 20% 30%, #051a2d 0%, #050505 100%);
+    color: #e0e0e0;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Header Horizontal --- */
+.futuristic-header {
+    background: rgba(0, 0, 0, 0.7) !important;
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+    padding: 0.75rem 0 !important;
+    width: 100%;
+    z-index: 1000;
+}
+
+.container-fluid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 3rem;
+}
+
+.navbar-brand {
+    color: #00d4ff !important; /* Bleu Cyan constant */
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-decoration: none;
+    font-size: 1.3rem;
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
+.nav-link {
+    color: rgba(255, 255, 255, 0.7) !important;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-left: 25px;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #00d4ff !important;
+    text-shadow: 0 0 8px rgba(0, 212, 255, 0.6);
+}
+
+/* --- Main & Mise en page --- */
+main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+}
+
+/* Style du texte d'accueil harmonisé en Bleu */
+main h1, .welcome-text {
+    font-size: 3.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    color: #ffffff;
+    border-left: 5px solid #00d4ff; /* Barre latérale bleue */
+    padding-left: 30px;
+    text-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+}
+
+/* --- Conteneur Card (Glassmorphism) --- */
+.custom-form-container {
+    width: 100%;
+    max-width: 600px;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.03) !important;
+    backdrop-filter: blur(25px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 15px !important;
+    padding: 50px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+}
+
+.card-header {
+    background: transparent !important;
+    border-bottom: 2px solid #ffffff !important;
+    color: #ffffff !important;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    text-align: left;
+    padding-bottom: 15px !important;
+    margin-bottom: 40px;
+    font-weight: 800;
+    font-size: 1.4rem;
+}
+
+/* --- Formulaire & Champs --- */
+.mb-3 {
+    margin-bottom: 1.8rem !important;
+}
+
+.form-label {
+    color: rgba(255, 255, 255, 0.6) !important;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.form-control {
+    background: rgba(0, 0, 0, 0.4) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+    padding: 14px;
+    border-radius: 4px;
+}
+
+.form-control:focus {
+    background: rgba(0, 0, 0, 0.6) !important;
+    border-color: #00d4ff !important; /* Focus bleu cyan */
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.3) !important;
+    outline: none;
+}
+
+/* --- SUPPRESSION DU FOND BLANC D'AUTOCOMPLÉTION --- */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+    -webkit-text-fill-color: #ffffff !important;
+    -webkit-box-shadow: 0 0 0px 1000px #051a2d inset !important; /* Fond bleu très sombre */
+    box-shadow: 0 0 0px 1000px #051a2d inset !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+/* --- Boutons (Style Bleu Cyan UIex4) --- */
+.btn-primary, .btn-valider {
+    background: #00d4ff !important; /* Bleu cyan vif */
+    border: none !important;
+    color: #000000 !important; /* Texte noir pour lisibilité sur bleu clair */
+    padding: 16px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    width: 100%;
+    border-radius: 4px !important;
+    margin-top: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    background: #00e5ff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 212, 255, 0.5);
+}
+
+.btn-secondary, .btn-outline-info {
+    background: transparent !important;
+    border: 1px solid #00d4ff !important;
+    color: #00d4ff !important;
+    padding: 14px;
+    width: 100%;
+    border-radius: 4px !important;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-top: 15px;
+}
+
+/* --- Footer --- */
+footer {
+    background: rgba(0, 0, 0, 0.8) !important;
+    padding: 1.5rem 0;
+    text-align: center;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.4);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
