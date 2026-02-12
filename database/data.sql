@@ -25,7 +25,7 @@ CREATE TABLE objets (
 CREATE TABLE echanges (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_proproseur INT,
-    obj_proproseur VARCHAR(255),
+    id_obj_proproseur INT,
     id_receveur INT,
-    obj_receveur VARCHAR(255)
+    id_obj_receveur VARCHAR(255)
 );
