@@ -6,3 +6,6 @@
             - (historique)
         - Données de test
     - 
+
+Echange non valable
+annuler les echanges en cours quand on fait un echange
